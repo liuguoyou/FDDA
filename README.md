@@ -1,4 +1,4 @@
-# Fine-grained Data Distribution Alignment for Post-Training Quantization
+# Fine-grained Data Distribution Alignment for Post-Training Quantization ([Paper Link](https://arxiv.org/abs/2109.04186)) 
 
 ## Requirements
 
@@ -27,6 +27,10 @@
    For F8L8, run:
    
    `CUDA_VISIBLE_DEVICES=0 python main_cosine_CBNS_8F8L.py --model_name resnet18/mobilenet_w1/mobilenet_w2/regnetx_600m --conf_path imagenet_config.hocon --id=0`
+
+## Evaluate Our Models
+
+We also provide training logs and trained models for test. They can be downloaded from [here](https://drive.google.com/drive/folders/1LNhxoYKG2fz3D3-7A7WiMpdjAh8f-HZH?usp=sharing):
 
 To test our models, download it and run:
 
