@@ -94,7 +94,7 @@ class Trainer(object):
 					BN_layer_num = 20
 				elif self.model_name == 'mobilenet_w1':
 					BN_layer_num = 27
-				elif self.model_name == 'mobilenet_w2':
+				elif self.model_name == 'mobilenetv2_w1':
 					BN_layer_num = 52
 				elif self.model_name == 'regnetx_600m':
 					BN_layer_num = 53

@@ -178,45 +178,209 @@ class ExperimentDesign:
 
         self.train_loader, self.test_loader = data_loader.getloader()
 
-    def quantize_model(self, model):
+    def quantize_model_resnet18(self, model, bit=None, module_name='model'):
         """
         Recursively quantize a pretrained single-precision model to int8 quantized model
         model: pretrained single-precision model
         """
-
         weight_bit = self.settings.qw
         act_bit = self.settings.qa
 
         # quantize convolutional and linear layers
         if type(model) == nn.Conv2d:
-            quant_mod = Quant_Conv2d(weight_bit=weight_bit)
+            if bit is not None:
+                quant_mod = Quant_Conv2d(weight_bit=bit)
+            else:
+                quant_mod = Quant_Conv2d(weight_bit=weight_bit)
             quant_mod.set_param(model)
             return quant_mod
         elif type(model) == nn.Linear:
-            quant_mod = Quant_Linear(weight_bit=weight_bit)
+            # quant_mod = Quant_Linear(weight_bit=weight_bit)
+            quant_mod = Quant_Linear(weight_bit=8)
             quant_mod.set_param(model)
             return quant_mod
 
         # quantize all the activation
         elif type(model) == nn.ReLU or type(model) == nn.ReLU6:
-            return nn.Sequential(*[model, QuantAct(activation_bit=act_bit)])
+            # import IPython
+            # IPython.embed()
+            if module_name == 'model.features.stage4.unit2.activ':
+                return nn.Sequential(*[model, QuantAct(activation_bit=8)])
+            if bit is not None:
+                return nn.Sequential(*[model, QuantAct(activation_bit=bit)])
+            else:
+                return nn.Sequential(*[model, QuantAct(activation_bit=act_bit)])
 
         # recursively use the quantized module to replace the single-precision module
         elif type(model) == nn.Sequential:
             mods = []
             for n, m in model.named_children():
-                mods.append(self.quantize_model(m))
+                if n == 'init_block':
+                    mods.append(self.quantize_model_resnet18(m, 8, module_name + '.' + n))
+                else:
+                    mods.append(self.quantize_model_resnet18(m, bit, module_name + '.' + n))
             return nn.Sequential(*mods)
         else:
             q_model = copy.deepcopy(model)
+
             for attr in dir(model):
                 mod = getattr(model, attr)
                 if isinstance(mod, nn.Module) and 'norm' not in attr:
-                    setattr(q_model, attr, self.quantize_model(mod))
+                    setattr(q_model, attr, self.quantize_model_resnet18(mod, bit, module_name + '.' + attr))
+            return q_model
+
+    def quantize_model_regnetx600m(self, model, bit=None, module_name='model'):
+        """
+        Recursively quantize a pretrained single-precision model to int8 quantized model
+        model: pretrained single-precision model
+        """
+        weight_bit = self.settings.qw
+        act_bit = self.settings.qa
+
+        # quantize convolutional and linear layers
+        if type(model) == nn.Conv2d:
+            if module_name == 'model.features.init_block.conv':
+                quant_mod = Quant_Conv2d(weight_bit=8)
+            else:
+                quant_mod = Quant_Conv2d(weight_bit=weight_bit)
+            quant_mod.set_param(model)
+            return quant_mod
+        elif type(model) == nn.Linear:
+            # quant_mod = Quant_Linear(weight_bit=weight_bit)
+            quant_mod = Quant_Linear(weight_bit=8)
+            quant_mod.set_param(model)
+            return quant_mod
+
+        # quantize all the activation
+        elif type(model) == nn.ReLU or type(model) == nn.ReLU6:
+            # import IPython
+            # IPython.embed()
+            if module_name == 'model.features.stage4.unit7.activ' or module_name == 'model.features.init_block.activ':
+                return nn.Sequential(*[model, QuantAct(activation_bit=8)])
+            if bit is not None:
+                return nn.Sequential(*[model, QuantAct(activation_bit=bit)])
+            else:
+                return nn.Sequential(*[model, QuantAct(activation_bit=act_bit)])
+
+        # recursively use the quantized module to replace the single-precision module
+        elif type(model) == nn.Sequential:
+            mods = []
+            for n, m in model.named_children():
+                mods.append(self.quantize_model_regnetx600m(m, bit, module_name + '.' + n))
+            return nn.Sequential(*mods)
+        else:
+            q_model = copy.deepcopy(model)
+
+            for attr in dir(model):
+                mod = getattr(model, attr)
+                if isinstance(mod, nn.Module) and 'norm' not in attr:
+                    setattr(q_model, attr, self.quantize_model_regnetx600m(mod, bit, module_name + '.' + attr))
+            return q_model
+
+    def quantize_model_mobilenetv2_w1(self, model, bit=None, module_name='model'):
+        """
+        Recursively quantize a pretrained single-precision model to int8 quantized model
+        model: pretrained single-precision model
+        """
+        weight_bit = self.settings.qw
+        act_bit = self.settings.qa
+
+        # quantize convolutional and linear layers
+        if type(model) == nn.Conv2d:
+            if module_name == 'model.features.0.0':
+                quant_mod = Quant_Conv2d(weight_bit=8)
+            else:
+                quant_mod = Quant_Conv2d(weight_bit=weight_bit)
+            quant_mod.set_param(model)
+            return quant_mod
+        elif type(model) == nn.Linear:
+            # quant_mod = Quant_Linear(weight_bit=weight_bit)
+            quant_mod = Quant_Linear(weight_bit=8)
+            quant_mod.set_param(model)
+            return quant_mod
+
+        # quantize all the activation
+        elif type(model) == nn.ReLU or type(model) == nn.ReLU6:
+            # import IPython
+            # IPython.embed()
+            if module_name == 'model.features.18.2' or module_name == 'model.features.0.2':
+                return nn.Sequential(*[model, QuantAct(activation_bit=8)])
+            else:
+                return nn.Sequential(*[model, QuantAct(activation_bit=act_bit)])
+
+        # recursively use the quantized module to replace the single-precision module
+        elif type(model) == nn.Sequential:
+            mods = []
+            for n, m in model.named_children():
+                mods.append(self.quantize_model_mobilenetv2_w1(m, bit, module_name + '.' + n))
+            return nn.Sequential(*mods)
+        else:
+            q_model = copy.deepcopy(model)
+
+            for attr in dir(model):
+                mod = getattr(model, attr)
+                if isinstance(mod, nn.Module) and 'norm' not in attr:
+                    setattr(q_model, attr, self.quantize_model_mobilenetv2_w1(mod, bit, module_name + '.' + attr))
+            return q_model
+
+    def quantize_model_mobilenetv1_w1(self, model, bit=None, module_name='model'):
+        """
+        Recursively quantize a pretrained single-precision model to int8 quantized model
+        model: pretrained single-precision model
+        """
+        weight_bit = self.settings.qw
+        act_bit = self.settings.qa
+
+        # quantize convolutional and linear layers
+        if type(model) == nn.Conv2d:
+            if module_name == 'model.features.init_block.conv':
+                quant_mod = Quant_Conv2d(weight_bit=8)
+            else:
+                quant_mod = Quant_Conv2d(weight_bit=weight_bit)
+            quant_mod.set_param(model)
+            return quant_mod
+        elif type(model) == nn.Linear:
+            # quant_mod = Quant_Linear(weight_bit=weight_bit)
+            quant_mod = Quant_Linear(weight_bit=8)
+            quant_mod.set_param(model)
+            return quant_mod
+
+        # quantize all the activation
+        elif type(model) == nn.ReLU or type(model) == nn.ReLU6:
+            # import IPython
+            # IPython.embed()
+            if module_name == 'model.features.stage5.unit2.pw_conv.activ' or module_name == 'model.features.init_block.activ':
+                return nn.Sequential(*[model, QuantAct(activation_bit=8)])
+            else:
+                return nn.Sequential(*[model, QuantAct(activation_bit=act_bit)])
+
+        # recursively use the quantized module to replace the single-precision module
+        elif type(model) == nn.Sequential:
+            mods = []
+            for n, m in model.named_children():
+                mods.append(self.quantize_model_mobilenetv1_w1(m, bit, module_name + '.' + n))
+            return nn.Sequential(*mods)
+        else:
+            q_model = copy.deepcopy(model)
+
+            for attr in dir(model):
+                mod = getattr(model, attr)
+                if isinstance(mod, nn.Module) and 'norm' not in attr:
+                    setattr(q_model, attr, self.quantize_model_mobilenetv1_w1(mod, bit, module_name + '.' + attr))
             return q_model
 
     def _replace(self):
-        self.model = self.quantize_model(self.model)
+
+        if self.model_name == 'resnet18':
+            self.model = self.quantize_model_resnet18(self.model)
+        elif self.model_name == 'mobilenet_w1':
+            self.model = self.quantize_model_mobilenetv1_w1(self.model)
+        elif self.model_name == 'mobilenetv2_w1':
+            self.model = self.quantize_model_mobilenetv2_w1(self.model)
+        elif self.model_name == 'regnetx_600m':
+            self.model = self.quantize_model_regnetx600m(self.model)
+        else:
+            assert False, "unsupport model: " + self.model_name
 
     def freeze_model(self, model):
         """

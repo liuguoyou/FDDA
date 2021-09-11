@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="92cabb74-eff6-48e3-a0a1-25c3e889c7a6" name="Changes" comment="" />
+    <list default="true" id="92cabb74-eff6-48e3-a0a1-25c3e889c7a6" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/test_8F8L.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BNScenters.py" beforeDir="false" afterPath="$PROJECT_DIR$/BNScenters.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imagenet_config.hocon" beforeDir="false" afterPath="$PROJECT_DIR$/imagenet_config.hocon" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_DBNS_CBNS.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_DBNS_CBNS.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main_DBNS_CBNS_8F8L.py" beforeDir="false" afterPath="$PROJECT_DIR$/main_DBNS_CBNS_8F8L.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainer_DBNS_CBNS.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainer_DBNS_CBNS.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

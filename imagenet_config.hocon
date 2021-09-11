@@ -1,6 +1,6 @@
 #  ------------ General options ----------------------------------------
 save_path = "./save_ImageNet/"
-dataPath = "PathToImageNetDataset"
+dataPath = "/media/disk1/cbh/DATASET/ILSVRC2012/"
 dataset = "imagenet"
 
 # ------------- Data options -------------------------------------------

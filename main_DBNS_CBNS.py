@@ -229,7 +229,7 @@ class ExperimentDesign:
 			elif self.model_name == 'mobilenet_w1':
 				self.model_teacher = ptcv_get_model('mobilenet_w1', pretrained=True)
 				self.model = ptcv_get_model('mobilenet_w1', pretrained=True)
-			elif self.model_name == 'mobilenet_w2':
+			elif self.model_name == 'mobilenetv2_w1':
 				self.model_teacher = eval('hubconf.{}(pretrained=True)'.format('mobilenetv2'))
 				self.model = eval('hubconf.{}(pretrained=True)'.format('mobilenetv2'))
 			elif self.model_name == 'regnetx_600m':

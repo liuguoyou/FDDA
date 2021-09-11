@@ -10,7 +10,7 @@ import torch
 import torch.backends.cudnn as cudnn
 from torch.autograd import Variable
 import torch.nn as nn
-
+import hubconf
 # option file should be modified according to your expriment
 from options import Option
 
@@ -229,7 +229,7 @@ class ExperimentDesign:
 			elif self.model_name == 'mobilenet_w1':
 				self.model_teacher = ptcv_get_model('mobilenet_w1', pretrained=True)
 				self.model = ptcv_get_model('mobilenet_w1', pretrained=True)
-			elif self.model_name == 'mobilenet_w2':
+			elif self.model_name == 'mobilenetv2_w1':
 				self.model_teacher = eval('hubconf.{}(pretrained=True)'.format('mobilenetv2'))
 				self.model = eval('hubconf.{}(pretrained=True)'.format('mobilenetv2'))
 			elif self.model_name == 'regnetx_600m':
@@ -471,7 +471,7 @@ class ExperimentDesign:
 			self.model = self.quantize_model_resnet18(self.model)
 		elif self.model_name == 'mobilenet_w1':
 			self.model = self.quantize_model_mobilenetv1_w1(self.model)
-		elif self.model_name == 'mobilenet_w2':
+		elif self.model_name == 'mobilenetv2_w1':
 			self.model = self.quantize_model_mobilenetv2_w1(self.model)
 		elif self.model_name == 'regnetx_600m':
 			self.model = self.quantize_model_regnetx600m(self.model)
