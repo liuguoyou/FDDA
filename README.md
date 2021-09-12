@@ -73,4 +73,4 @@ Following results can be obtained:
 
 ### Contact
 
-For any question, be free to contact: viper.zhong@gmail.com
+For any question, be free to contact: viper.zhong@gmail.com. The github issue is also welcome.
