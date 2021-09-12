@@ -381,6 +381,7 @@ class ExperimentDesign:
             self.model = self.quantize_model_regnetx600m(self.model)
         else:
             assert False, "unsupport model: " + self.model_name
+        print(self.model)
 
     def freeze_model(self, model):
         """

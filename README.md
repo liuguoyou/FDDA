@@ -32,7 +32,6 @@
 
 We also provide **original** (before the code clean up, thus, the logs will be a little messy.) training logs and trained models for test. 
 They can be downloaded from [here](https://drive.google.com/drive/folders/1LNhxoYKG2fz3D3-7A7WiMpdjAh8f-HZH?usp=sharing) 
-(The models for mobilenetv1-W5A5, mobilenetv2-W5A5 are trained in another lab and the user account can't be accessed temporally. We will upload these models as soon as the user account recover. The estimated time is next month(2021-10).)
 
 Due to different remote servers have different hardware and software constraints, we use different versions of PyTorch to finish our experiments.
 Noted that the PyTorch version in test should be the same as the PyTorch version in train to fully recover the accuracy.
