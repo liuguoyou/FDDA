@@ -70,3 +70,7 @@ Following results can be obtained:
 | regnetx600m  | W4A4-F8L8 | ImageNet | 70.326%    | 
 | regnetx600m  | W5A5-F5L5 | ImageNet | 73.620%    | 
 | regnetx600m  | W5A5-F8L8 | ImageNet | 73.996%    | 
+
+### Contact
+
+For any question, be free to contact: viper.zhong@gmail.com
