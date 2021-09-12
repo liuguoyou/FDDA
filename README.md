@@ -31,7 +31,8 @@
 ## Evaluate Our Models
 
 We also provide **original** (before the code clean up, thus, the logs will be a little messy.) training logs and trained models for test. 
-They can be downloaded from [here](https://drive.google.com/drive/folders/1LNhxoYKG2fz3D3-7A7WiMpdjAh8f-HZH?usp=sharing):
+They can be downloaded from [here](https://drive.google.com/drive/folders/1LNhxoYKG2fz3D3-7A7WiMpdjAh8f-HZH?usp=sharing) 
+(The models for mobilenetv1-W5A5, mobilenetv2-W5A5 are trained in another lab and the user account can't be accessed temporally. We will upload these models as soon as the user account recover. The estimated time is next month.)
 
 Due to different remote servers have different hardware and software constraints, we use different versions of PyTorch to finish our experiments.
 Noted that the PyTorch version in test should be the same as the PyTorch version in train to fully recover the accuracy.
@@ -45,3 +46,27 @@ To test our models, download it and then modify the `qw, qa` in imagenet_config.
    For F8L8, run:
    
    `CUDA_VISIBLE_DEVICES=0 python test_8F8L.py --conf_path imagenet_config.hocon --model_name resnet18/mobilenet_w1/mobilenetv2_w1/regnetx_600m --model_path PathToModel`
+
+Following results can be obtained:
+
+| Model     | Bit-width| Dataset  | Top-1 Acc.  |
+| --------- | -------- | -------- | ----------- | 
+| resnet18  | W4A4-F4L4 | ImageNet | 68.766%    | 
+| resnet18  | W4A4-F8L8 | ImageNet | %    | 
+| resnet18  | W5A5-F5L5 | ImageNet | 70.558%    | 
+| resnet18  | W5A5-F8L8 | ImageNet | 70.864%    | 
+| --------- | -------- | -------- | ----------- | 
+| mobilenetv1  | W4A4-F4L4 | ImageNet | 63.748%    | 
+| mobilenetv1  | W4A4-F8L8 | ImageNet | 65.760%    | 
+| mobilenetv1  | W5A5-F5L5 | ImageNet | 70.258%    | 
+| mobilenetv1  | W5A5-F8L8 | ImageNet | 71.764%    | 
+| --------- | -------- | -------- | ----------- | 
+| mobilenetv2  | W4A4-F4L4 | ImageNet | 68.382%    | 
+| mobilenetv2  | W4A4-F8L8 | ImageNet | 69.322%    | 
+| mobilenetv2  | W5A5-F5L5 | ImageNet | 71.63%    | 
+| mobilenetv2  | W5A5-F8L8 | ImageNet | 71.99%    | 
+| --------- | -------- | -------- | ----------- | 
+| regnetx600m  | W4A4-F4L4 | ImageNet | 68.960%    | 
+| regnetx600m  | W4A4-F8L8 | ImageNet | 70.326%    | 
+| regnetx600m  | W5A5-F5L5 | ImageNet | 73.620%    | 
+| regnetx600m  | W5A5-F8L8 | ImageNet | 73.996%    | 
