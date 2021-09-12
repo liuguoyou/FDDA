@@ -1,4 +1,4 @@
-# Fine-grained Data Distribution Alignment for Post-Training Quantization ([Paper Link](https://arxiv.org/abs/2109.04186)) 
+# Fine-grained Data Distribution Alignment for Post-Training Quantization
 
 ## Requirements
 
@@ -30,7 +30,13 @@
 
 ## Evaluate Our Models
 
-We also provide training logs and trained models for test. They can be downloaded from [here](https://drive.google.com/drive/folders/1LNhxoYKG2fz3D3-7A7WiMpdjAh8f-HZH?usp=sharing):
+We also provide **original** (before the code clean up) training logs and trained models for test. Thus, the logs will be a little messy.
+They can be downloaded from [here](https://drive.google.com/drive/folders/1LNhxoYKG2fz3D3-7A7WiMpdjAh8f-HZH?usp=sharing):
+
+Due to different remote servers have different hardware and software constraints, we use different versions of PyTorch to finish our experiments.
+Noted that the PyTorch version in test should be the same as the PyTorch version in train to fully recover the accuracy.
+Please use the pytorch version in train in the first line of `train_test.log`.
+
 
 To test our models, download it and then modify the `qw, qa` in imagenet_config.hocon to set desired bit-width. For all layers are quantized to same bit-width, run:
 
